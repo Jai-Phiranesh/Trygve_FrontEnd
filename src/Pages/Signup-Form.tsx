@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import '../styles/Signup-Form.css';
 import { useNavigate } from 'react-router-dom';
 
-
 const SignupForm: React.FC = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -18,9 +17,25 @@ const SignupForm: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const isValidPhone = (phone: string) =>
+    /^\d{10}$/.test(phone);
+
   const handleSubmit = () => {
+    if (!isValidEmail(formData.email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    if (!isValidPhone(formData.secondaryPhone)) {
+      alert('Please enter a valid 10-digit secondary phone number.');
+      return;
+    }
+
     localStorage.setItem('signupInfo', JSON.stringify(formData));
-    navigate('/Confirmation'); 
+    navigate('/Confirmation');
     alert('Account Created & Info Stored!');
   };
 
@@ -32,7 +47,7 @@ const SignupForm: React.FC = () => {
 
       <div className="form-section">
         <div className="form-wrapper">
-           <div className="back-arrow" onClick={() => navigate(-1)}>←</div>
+          <div className="back-arrow" onClick={() => navigate(-1)}>←</div>
           <h2>Almost Done!</h2>
           <p>Please enter your details in the following section.</p>
 

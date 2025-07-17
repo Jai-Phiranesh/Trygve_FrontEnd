@@ -22,7 +22,9 @@ const GettingStarted: React.FC = () => {
           <button className="btn primary" onClick={() => navigate('/Signup-Page')}>
   Sign up
 </button>
-          <button className="btn secondary">Log in</button>
+          <button className="btn primary" onClick={() => navigate('/login')}>
+ Login
+</button>
         </div>
       </div>
     </div>
