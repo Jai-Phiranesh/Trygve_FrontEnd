@@ -1,0 +1,139 @@
+/* Global fix in your index.css or App.css */
+
+
+
+.onboarding-container {
+  display: flex;
+  flex-direction: column;  /* ✅ Stack on mobile */
+  align-items: center;     /* ✅ Center horizontally */
+  justify-content: center;
+  height: 100dvh;
+  width: 100%;
+  padding: 2rem 1.5rem;
+  overflow: hidden;
+  position: relative;
+  background-color: #fff;
+   font-family: 'Audiowide', sans-serif;
+}
+
+
+/* ✅ Faded background logo */
+.background-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px; /* ⬅️ increase size */
+  height: 500px;
+  background-image: url('/logo.png'); /* or your actual logo */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.5; /* ⬅️ make it more visible */
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+
+.logo-overlay {
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  z-index: 2;
+  position: relative;
+}
+
+.welcome-text {
+  font-size: 1.5rem;
+  color: #222;
+  margin-bottom: 2rem;
+}
+
+.brand-name {
+  font-size: 3rem;
+  color: #005eff;
+    margin-bottom: 2rem;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.tagline {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  color: #555;
+  margin: 1.5rem 0;
+  padding: 0 1rem;
+   margin-bottom: 3rem;
+}
+
+.button-group {
+    
+  display: flex;
+  flex-direction: column;
+  align-items: center;    
+  gap: 2rem;
+}
+
+
+.btn {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  padding: 0.75rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn.primary {
+  background-color: #fff;
+  color: #005eff;
+  border: 2px solid #005eff;
+}
+
+.btn.primary:hover {
+   background-color: #f0f8ff;
+}
+
+.btn.secondary {
+  background-color: #fff;
+  color: #005eff;
+  border: 2px solid #005eff;
+}
+
+.btn.secondary:hover {
+  background-color: #f0f8ff;
+}
+
+/* Responsive for larger screens */
+@media (min-width: 768px) {
+  .logo-overlay {
+    max-width: 500px;
+  }
+
+  .brand-name {
+    font-size: 4rem;
+  }
+
+  .welcome-text {
+    font-size: 2rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+  .button-group
+  {
+    flex-direction: row;
+    align-items: center;
+  }
+
+   .background-logo {
+    width: 700px;
+    height: 700px;
+    opacity: 0.50;
+  }
+  .btn{
+    width: 60%;
+  }
+}

@@ -97,7 +97,7 @@ const Onboarding: React.FC = () => {
   };
 
   const handleGetStarted = () => {
-    navigate("/landing-Page");
+    navigate("/home-Page");
   };
 
   // State flags
