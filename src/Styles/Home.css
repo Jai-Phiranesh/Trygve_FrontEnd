@@ -1,7 +1,4 @@
 /* Global fix in your index.css or App.css */
-
-
-
 .onboarding-container {
   display: flex;
   flex-direction: column;  /* ✅ Stack on mobile */
@@ -13,127 +10,123 @@
   overflow: hidden;
   position: relative;
   background-color: #fff;
-   font-family: 'Audiowide', sans-serif;
+  font-family: 'Audiowide', sans-serif;
 }
-
-
-/* ✅ Faded background logo */
-.background-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 500px; /* ⬅️ increase size */
-  height: 500px;
-  background-image: url('/logo.png'); /* or your actual logo */
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  opacity: 0.5; /* ⬅️ make it more visible */
-  transform: translate(-50%, -50%);
-  z-index: 1;
-}
-
-
 .logo-overlay {
   text-align: center;
   max-width: 400px;
   width: 100%;
   z-index: 2;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-
 .welcome-text {
   font-size: 1.5rem;
   color: #222;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem; /* Reduced from 2rem */
 }
-
 .brand-name {
   font-size: 3rem;
   color: #005eff;
-    margin-bottom: 2rem;
+  margin-bottom: 1rem; /* Reduced from 2rem */
   letter-spacing: 2px;
   text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
-
+/* ---------- Logo - Bigger and tighter spacing ---------- */
+.bag-logo {
+  background-image: url('/logo.png');
+  object-fit: cover; /* or cover, depending on your layout */
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 200px; /* ⬅️ increase size */
+  height: 200px;
+  margin: 1rem 0;
+  opacity: 0.5;
+}
 .tagline {
   font-family: 'Poppins', sans-serif;
   font-size: 0.9rem;
   color: #555;
-  margin: 1.5rem 0;
+  margin: 1rem 0; /* Reduced from 1.5rem 0 */
   padding: 0 1rem;
-   margin-bottom: 3rem;
+  margin-bottom: 2rem; /* Reduced from 3rem */
 }
-
 .button-group {
-    
   display: flex;
   flex-direction: column;
-  align-items: center;    
-  gap: 2rem;
+  align-items: center;
+  gap: 1.5rem; /* Reduced from 2rem */
 }
-
-
 .btn {
   font-family: 'Segoe UI', sans-serif;
   font-size: 1rem;
-  padding: 0.75rem;
-  border-radius: 999px;
-  border: none;
+  padding: 0.75rem 4rem; /* ✅ More horizontal padding = longer button */
+  border-radius: 9999px; /* Pill shape */
+  border: 2px solid #005eff;
+  background-color: #fff;
+  color: #005eff;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 100%;
+  min-width: 280px; /* ✅ Ensures it stays long even on small screens */
+  text-align: center;
 }
+
 
 .btn.primary {
   background-color: #fff;
   color: #005eff;
   border: 2px solid #005eff;
 }
-
 .btn.primary:hover {
-   background-color: #f0f8ff;
+  background-color: #005eff;
+  color: #fff;
 }
-
 .btn.secondary {
   background-color: #fff;
   color: #005eff;
   border: 2px solid #005eff;
 }
-
 .btn.secondary:hover {
-  background-color: #f0f8ff;
+  background-color: #005eff;
+  color: #fff;
 }
-
 /* Responsive for larger screens */
 @media (min-width: 768px) {
   .logo-overlay {
     max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
-
   .brand-name {
     font-size: 4rem;
   }
-
   .welcome-text {
     font-size: 2rem;
   }
-
   .tagline {
     font-size: 1rem;
   }
-  .button-group
-  {
+  .button-group {
     flex-direction: row;
     align-items: center;
   }
-
-   .background-logo {
+  .background-logo {
     width: 700px;
     height: 700px;
     opacity: 0.50;
   }
-  .btn{
+  .btn {
     width: 60%;
+  }
+  /* Logo positioning for desktop - Even bigger */
+  .bag-logo {
+    width: 200px; /* Increased from 150px */
+    height: 200px; /* Increased from 150px */
+    margin: 1rem auto 1.5rem auto; /* Reduced margins */
   }
 }

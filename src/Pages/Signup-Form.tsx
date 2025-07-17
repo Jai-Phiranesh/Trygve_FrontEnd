@@ -1,0 +1,80 @@
+import React, { useState } from 'react';
+import '../styles/Signup-Form.css';
+import { useNavigate } from 'react-router-dom';
+
+
+const SignupForm: React.FC = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    area: '',
+    secondaryPhone: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = () => {
+    localStorage.setItem('signupInfo', JSON.stringify(formData));
+    navigate('/Confirmation'); 
+    alert('Account Created & Info Stored!');
+  };
+
+  return (
+    <div className="signup-container">
+      <div className="left-image-section">
+        <img src={'/1.png'} alt="Side Visual" />
+      </div>
+
+      <div className="form-section">
+        <div className="form-wrapper">
+           <div className="back-arrow" onClick={() => navigate(-1)}>←</div>
+          <h2>Almost Done!</h2>
+          <p>Please enter your details in the following section.</p>
+
+          <div className="form-fields">
+            <input
+              type="text"
+              name="fullName"
+              placeholder="Enter Full Name"
+              value={formData.fullName}
+              onChange={handleChange}
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Email Address"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              name="area"
+              placeholder="Enter Area"
+              value={formData.area}
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              name="secondaryPhone"
+              placeholder="Enter Secondary Phone Number"
+              value={formData.secondaryPhone}
+              onChange={handleChange}
+            />
+          </div>
+
+          <button className="submit-button" onClick={handleSubmit}>
+            Create Account
+          </button>
+        </div>
+        <img src={'/public/logo.png'} alt="Logo Watermark" className="background-logo" />
+      </div>
+    </div>
+  );
+};
+
+export default SignupForm;

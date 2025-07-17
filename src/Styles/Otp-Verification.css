@@ -1,0 +1,147 @@
+/* Wrapper layout */
+.otp-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Left-side image for desktop */
+.otp-left {
+  display: none;
+  flex: 0 0 40%;
+  background-image: url('/3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Right container */
+.otp-container {
+  
+  flex: 1;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.otp-back {
+  font-size: 1.5rem;
+  position: absolute;
+  left: 1.5rem;
+  top: 1.5rem;
+  cursor: pointer;
+}
+
+.otp-heading {
+  font-size: 1.6rem;
+  font-family: 'Audiowide', sans-serif;
+  color: #005eff;
+  margin-top: 3rem;
+}
+
+.otp-subtext {
+  margin-top: 1rem;
+  color: #555;
+  font-size: 0.95rem;
+  max-width: 300px;
+}
+
+.otp-input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin: 2rem 0;
+}
+
+.otp-input {
+  width: 45px;
+  height: 50px;
+  font-size: 1.5rem;
+  text-align: center;
+  border: 2px solid #005eff;
+  border-radius: 8px;
+}
+
+.otp-resend {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.otp-resend span {
+  color: #005eff;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.otp-logo {
+  background-image: url('/logo.png');
+  
+  object-fit: cover; /* or cover, depending on your layout */
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 200px; /* ⬅️ increase size */
+  height: 200px;
+  margin: 1rem 0;
+  opacity: 0.5;
+}
+  
+
+.otp-verify-btn {
+  
+   
+  background-color: #005eff;
+  color: white;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 94, 255, 0.3);
+  width: 100%;
+  max-width: 320px;
+}
+
+/* Responsive for desktop */
+@media (min-width: 768px) {
+  .otp-left {
+    display: block;
+  }
+
+  .otp-container {
+    margin-left: 5rem;
+    padding: 4rem;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .otp-heading {
+    font-size: 2.2rem;
+  }
+
+  .otp-subtext {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+
+  .otp-input-group {
+    justify-content: flex-start;
+  }
+
+  .otp-verify-btn {
+    align-self: flex-start;
+  }
+
+  .otp-logo {
+    
+    margin: 2rem 3rem;
+    
+  }
+  .otp-verify-btn{
+    margin-top: 0rem;
+  }
+}
