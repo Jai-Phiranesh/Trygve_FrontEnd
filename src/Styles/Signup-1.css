@@ -1,3 +1,11 @@
+/* Center all main content except the back arrow */
+.signup1-content-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
 /* ---------- Global Fixes ---------- */
 
 /* ---------- Wrapper Layout ---------- */
@@ -8,15 +16,6 @@
   align-items: center;
 }
 
-/* ---------- Left Image Side (Hidden on Mobile) ---------- */
-.signup1-left {
-  display: none;
-  background-image: url('/1.png'); /* ✅ Update path correctly */
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-color: #f7faff;
-}
 
 /* ---------- Right Content Side ---------- */
 .signup1-container {
@@ -24,6 +23,11 @@
   font-family: 'Segoe UI', sans-serif;
   display: flex;
   flex-direction: column;
+  max-width: 370px;
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
 }
 
 /* ---------- Back Arrow ---------- */
@@ -56,7 +60,7 @@
 }
 
 .country-code {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   border: 2px solid #005eff;
   border-radius: 8px;
   background: #fff;
@@ -64,14 +68,22 @@
   font-size: 1rem;
   display: flex;
   align-items: center;
+  height: 44px;
+  min-height: 44px;
+  box-sizing: border-box;
+  overflow: visible;
 }
 
 .number-input {
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   border: 2px solid #005eff;
   border-radius: 8px;
   font-size: 1rem;
+  height: 38px;
+  min-height: 38px;
+  box-sizing: border-box;
+  overflow: visible;
 }
 
 /* ---------- Error Text ---------- */
@@ -83,7 +95,7 @@
 
 /* ---------- Send Button ---------- */
 .send-btn {
-  margin-top: 2.5rem;
+  margin-top: 1rem;
   background-color: #005eff;
   color: white;
   padding: 0.8rem 2rem;
@@ -134,49 +146,3 @@
 }
 
 /* ---------- Desktop Layout ---------- */
-@media (min-width: 768px) {
-  .signup1-wrapper {
-    flex-direction: row;
-  }
-  
-  .signup1-left {
-    display: block;
-    flex: 0 0 40%;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-  }
-  
-  .signup1-container {
-    margin-left: 4rem;
-    flex: 1;
-    padding: 4rem 3rem;
-  }
-  
-  .heading {
-    font-size: 2.2rem;
-  }
-  
-  .subtext {
-    font-size: 1rem;
-  }
-  
-  .input-row {
-    width: 80%;
-  }
-  
-  .country-code,
-  .number-input {
-    font-size: 1rem;
-    padding: 0.6rem 1rem;
-  }
-  
-  .send-btn {
-    max-width: 250px;
-  }
-  
-  /* Logo remains centered on desktop too */
-  .bag-logo {
-    align-self: center;
-  }
-}

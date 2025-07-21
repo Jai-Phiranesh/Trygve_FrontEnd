@@ -1,38 +1,63 @@
 import React, { useState } from "react";
 import "../Styles/Login.css";
 import { useNavigate } from "react-router-dom";
+import { useAuthFlow } from '../Context/Context'; // <-- import
+import { getAuth, signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("dscode@gmail.com");
-  const [phone, setPhone] = useState("+91 79041 62755");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const navigate = useNavigate();
+  const { setPhoneNumber } = useAuthFlow();
 
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  const userDataString = localStorage.getItem("signupInfo"); 
+  const auth = getAuth();
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  if (userDataString) {
-    const userData = JSON.parse(userDataString);
+    const cleanedInputPhone = phone.replace(/\D/g, "").slice(-10);
+    const fullPhone = "+91" + cleanedInputPhone;
 
-    const cleanedInputPhone = phone.replace(/\D/g, "").slice(-10); // keep only last 10 digits
-
-    if (
-      userData.email.toLowerCase() === email.toLowerCase() &&
-      userData.secondaryPhone === cleanedInputPhone
-    ) {
-        navigate("/login-otp"); // Navigate to OTP verification page
-      alert("Login successful!");
-    } else {
-      alert("Invalid credentials. Please try again.");
+    if (!email || cleanedInputPhone.length !== 10) {
+      alert("Please enter valid email and phone number.");
+      return;
     }
-  } else {
-    alert("No user data found in localStorage.");
-  }
-};
+
+    // Setup invisible reCAPTCHA
+    interface WindowWithRecaptcha extends Window {
+      recaptchaVerifier?: RecaptchaVerifier;
+    }
+    const customWindow = window as WindowWithRecaptcha;
+    if (!customWindow.recaptchaVerifier) {
+      customWindow.recaptchaVerifier = new RecaptchaVerifier(
+        auth, // Auth object first
+        "recaptcha-container", // Container ID string second
+        { size: "invisible" }
+      );
+    }
+
+    try {
+      await signInWithPhoneNumber(auth, fullPhone, customWindow.recaptchaVerifier as RecaptchaVerifier);
+      setPhoneNumber(fullPhone);
+      navigate("/login-otp");
+      alert("OTP sent!");
+    } catch (error: unknown) {
+      if (typeof error === "object" && error && "code" in error) {
+        const err = error as { code?: string; message?: string };
+        if (err.code === "auth/user-not-found") {
+          alert("Phone number not registered.");
+        } else {
+          alert(err.message || "Failed to send OTP.");
+        }
+      } else {
+        alert("Failed to send OTP.");
+      }
+    }
+  };
 
   return (
     <div className="login-container">
+      <div id="recaptcha-container" style={{ display: "none" }} />
       <div className="login-image-section">
         <img
           src="/login-logo.png"
@@ -41,16 +66,14 @@ const handleSubmit = (e: React.FormEvent) => {
         />
       </div>
       <h1 className="login-heading">Login</h1>
-      <p className="login-subtext">Enter email and phone number to continue</p>
-
       <form className="login-form" onSubmit={handleSubmit}>
         <div className="login-input-group">
-          <label htmlFor="email">Email Id</label>
+          <label htmlFor="email">Email</label>
           <div className="input-with-icon">
             <input
               type="email"
               id="email"
-              placeholder="dscode@gmail.com"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -64,7 +87,7 @@ const handleSubmit = (e: React.FormEvent) => {
           <input
             type="tel"
             id="phone"
-            placeholder="+91 79041 62755"
+            placeholder="Enter 10 Digit Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required

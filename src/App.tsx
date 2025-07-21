@@ -7,24 +7,28 @@ import SignupForm from './Pages/Signup-Form'; // ✅ Import the Signup Form page
 import Confirmation from './Pages/Confirmation'; // ✅ Import the Confirmation page
 import Login from './Pages/Login'; // ✅ Import the Login page
 import LoginOtp from './Pages/Login-Otp'; // ✅ Import the Login OTP page
+import LoginConfirmation from './Pages/Login-Confirmation'; // ✅ Import the Login Confirmation page
 import './App.css'
+import { AuthFlowProvider } from './Context/Context';
 
 function App() {
   
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Onboarding />} />
-        <Route path="/home-Page" element={<HomePage />} />
-        <Route path="/Signup-Page" element={<Signup1 />} />
-        <Route path="/Otp-Verification" element={<OtpVerification />} />
-        <Route path="/Signup-Form" element={<SignupForm />} />
-        <Route path="/Confirmation" element={<Confirmation />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/login-otp" element={<LoginOtp />} />
-        
-      </Routes>
+      <AuthFlowProvider>
+        <Routes>
+          <Route path="/" element={<Onboarding />} />
+          <Route path="/home-Page" element={<HomePage />} />
+          <Route path="/Signup-Page" element={<Signup1 />} />
+          <Route path="/Otp-Verification" element={<OtpVerification />} />
+          <Route path="/Signup-Form" element={<SignupForm />} />
+          <Route path="/Confirmation" element={<Confirmation />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/login-otp" element={<LoginOtp />} />
+          <Route path="/login-Confirmation" element={<LoginConfirmation />} />
+        </Routes>
+      </AuthFlowProvider>
     </Router>
   )
 }

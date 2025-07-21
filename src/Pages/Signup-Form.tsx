@@ -41,9 +41,7 @@ const SignupForm: React.FC = () => {
 
   return (
     <div className="signup-container">
-      <div className="left-image-section">
-        <img src={'/1.png'} alt="Side Visual" />
-      </div>
+      
 
       <div className="form-section">
         <div className="form-wrapper">

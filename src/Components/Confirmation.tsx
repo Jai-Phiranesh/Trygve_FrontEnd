@@ -19,13 +19,11 @@ const Confirmation: React.FC<ConfirmationProps> = ({
   onBack,
   onButtonClick,
   confirmationImageSrc,
-  sideImageSrc,
+  
 }) => {
   return (
     <div className="confirmation-container">
-      <div className="confirmation-left">
-        <img src={sideImageSrc} alt="Side" className="side-image" />
-      </div>
+      
 
       <div className="confirmation-right">
         <div className="confirmation-back" onClick={onBack}>

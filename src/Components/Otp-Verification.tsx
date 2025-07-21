@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useEffect, useState, useRef } from 'react';
 import '../Styles/Otp-Verification.css';
-import { useNavigate } from 'react-router-dom';
+import { RecaptchaVerifier } from 'firebase/auth';
+import { sendOtp, verifyOtp } from '../FireBase/Auth';
+import { useAuthFlow } from '../Context/Context';
+import { auth } from '../FireBase/Config';
 
 interface OtpVerificationProps {
   otpLength: number;
@@ -21,21 +25,32 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
   onSuccess,
   onBack,
 }) => {
-  const navigate = useNavigate();
   const [otp, setOtp] = useState<string[]>(Array(otpLength).fill(''));
-
-  // Generate and store OTP
-  const generateAndStoreOtp = () => {
-    const generatedOtp = Array.from({ length: otpLength }, () =>
-      Math.floor(Math.random() * 10)
-    ).join('');
-    localStorage.setItem('otp', JSON.stringify({ otp: generatedOtp }));
-    console.log('Generated OTP:', generatedOtp);
-  };
+  const { confirmationResult, setConfirmationResult } = useAuthFlow();
+  const recaptchaVerifierRef = useRef<RecaptchaVerifier | null>(null);
+  const recaptchaContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    generateAndStoreOtp();
-  }, [otpLength]);
+    setConfirmationResult(null); // Clear previous confirmationResult when phoneNumber changes
+    if (!recaptchaContainerRef.current) return;
+
+    const verifier = new RecaptchaVerifier(auth, recaptchaContainerRef.current, {
+      size: 'invisible',
+    });
+    recaptchaVerifierRef.current = verifier;
+
+    sendOtp(phoneNumber, verifier)
+      .then((confirmationResult) => {
+        setConfirmationResult(confirmationResult);
+      })
+      .catch((error) => {
+        console.error('Error sending OTP:', error);
+      });
+
+    return () => {
+      verifier.clear();
+    };
+  }, [phoneNumber, setConfirmationResult]);
 
   const handleChange = (index: number, value: string) => {
     if (/^\d?$/.test(value)) {
@@ -55,72 +70,88 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
     }
   };
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
     const enteredOtp = otp.join('');
-    const stored = localStorage.getItem('otp');
-    const savedOtp = stored ? JSON.parse(stored).otp : null;
 
-    if (!savedOtp) {
+    if (!confirmationResult) {
       alert('OTP expired or not generated.');
       return;
     }
 
-    if (enteredOtp === savedOtp) {
+    try {
+      const userCredential = await verifyOtp(confirmationResult, enteredOtp);
+      const tokenId = await userCredential.user.getIdToken();
+      localStorage.setItem('authToken', JSON.stringify({ tokenId }));
       alert('✅ OTP verified!');
       onSuccess();
-      navigate('/Signup-Form');
-    } else {
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
       alert('❌ Invalid OTP. Try again.');
     }
   };
 
   const handleResend = () => {
-    generateAndStoreOtp();
-    alert('🔁 OTP resent!');
+    const verifier = recaptchaVerifierRef.current;
+    if (verifier) {
+      console.log(phoneNumber);
+      sendOtp(phoneNumber, verifier)
+        .then((confirmationResult) => {
+          setConfirmationResult(confirmationResult);
+          alert('🔁 OTP resent!');
+        })
+        .catch((error) => {
+          console.error('Error resending OTP:', error);
+          alert('Failed to resend OTP. Please try again.');
+        });
+    } else {
+      alert('reCAPTCHA not initialized. Please refresh the page.');
+    }
   };
 
-  const maskedPhone = phoneNumber.replace(/^(\+91)?(\d{2})\d{4}(\d{2})$/, '+91 $2****$3');
+  const maskedPhone = phoneNumber.replace(/^\(\+91\)?(\d{2})\d{4}(\d{2})$/, '+91 $2****$3');
 
   return (
     <div className="otp-wrapper">
       <div className="otp-left" />
 
       <div className="otp-container">
-        <div className="otp-back" onClick={onBack}>←</div>
-
-        <h2 className="otp-heading">{title}</h2>
-        <p className="otp-subtext">
-          {subtitle} {maskedPhone}.
-        </p>
-
-        <div className="otp-input-group">
-          {otp.map((digit, i) => (
-            <input
-              key={i}
-              id={`otp-${i}`}
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              className="otp-input"
-              value={digit}
-              onChange={(e) => handleChange(i, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(i, e)}
-            />
-          ))}
+        <div className="back-wrapper">
+          <div className="otp-back" onClick={onBack}>←</div>
         </div>
-
-        <p className="otp-resend">
-          Didn’t receive code?{' '}
-          <span onClick={handleResend} style={{ cursor: 'pointer', color: '#005ce6' }}>
-            {resendText}
-          </span>
-        </p>
-
-        <div className="otp-logo" />
-
-        <button className="otp-verify-btn" onClick={handleVerify}>
-          Verify
-        </button>
+        <div id="recaptcha-container" ref={recaptchaContainerRef}></div>
+        <div className="otp-content-center">
+          <div className="otp-header">
+            <h2 className="otp-heading">{title}</h2>
+          </div>
+          <p className="otp-subtext">
+            {subtitle} {maskedPhone}.
+          </p>
+          <div className="otp-input-group">
+            {otp.map((digit, i) => (
+              <input
+                key={i}
+                id={`otp-${i}`}
+                type="text"
+                inputMode="numeric"
+                maxLength={1}
+                className="otp-input"
+                value={digit}
+                onChange={(e) => handleChange(i, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(i, e)}
+              />
+            ))}
+          </div>
+          <p className="otp-resend">
+            Didn’t receive code?{' '}
+            <span onClick={handleResend}>
+              {resendText}
+            </span>
+          </p>
+          <div className="otp-logo" />
+          <button className="otp-verify-btn" onClick={handleVerify}>
+            Verify
+          </button>
+        </div>
       </div>
     </div>
   );

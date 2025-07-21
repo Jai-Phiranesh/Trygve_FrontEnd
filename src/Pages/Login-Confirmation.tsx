@@ -1,10 +1,12 @@
 import React from 'react';
 import Confirmation from '../Components/Confirmation';
+import { useNavigate } from 'react-router-dom';
 
 
 const WelcomeConfirmation: React.FC = () => {
+  const navigate = useNavigate();
   const handleBack = () => {
-    console.log('Going back...');
+    navigate(-1);
   };
 
   const handleContinue = () => {

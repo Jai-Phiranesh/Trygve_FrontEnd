@@ -1,54 +1,45 @@
 /* ---------- Main Container ---------- */
 .signup-container {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #fff;
-}
-
-/* ---------- Left Image Section (Hidden on Mobile) ---------- */
-.left-image-section {
-  display: none;
-  width: 40%;
-  background-image: url('/1.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-color: #f7faff;
-}
-
-.left-image-section img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  justify-content: center;   /* Center horizontally */
+  align-items: center;       /* Center vertically */
+  background-color: #fff;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* ---------- Form Section ---------- */
 .form-section {
-  flex: 1;
-  position: relative;
+  width: 100%;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 1rem 1.5rem;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
   background-color: #fff;
-  overflow-y: auto;
+  padding: 3.5rem 1.5rem 2.5rem 1.5rem; /* More generous vertical padding */
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
-/* ---------- Background Logo (Watermark) - More Visible ---------- */
+/* ---------- Background Logo (Watermark) ---------- */
 .background-logo {
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
-  width: 200px;
-  height: 200px;
-  opacity: 0.15;
+  width: 260px;
+  height: 260px;
+  opacity: 0.08;
   transform: translate(-50%, -50%);
   z-index: 0;
   background-image: url('/logo.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  pointer-events: none;
 }
 
 /* ---------- Form Wrapper ---------- */
@@ -56,8 +47,14 @@
   z-index: 1;
   width: 100%;
   max-width: 400px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  padding-top: 1rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  box-sizing: border-box;
 }
 
 /* ---------- Back Arrow ---------- */
@@ -65,41 +62,64 @@
   font-size: 1.5rem;
   cursor: pointer;
   color: #005eff;
+  flex-direction: row;
   margin-bottom: 0.5rem;
-  display: inline-block;
+}
+
+/* Back arrow row */
+.back-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .form-wrapper {
+    box-shadow: none;
+    border-radius: 0;
+    max-width: 100vw;
+    min-height: 100vh;
+    padding: 1.2rem 0.5rem;
+  }
+  .back-arrow {
+    font-size: 1.7rem;
+    margin-bottom: 0.2rem;
+  }
 }
 
 /* ---------- Heading ---------- */
 h2 {
+  font-size: 1.8rem;
   font-weight: bold;
   color: #005eff;
-  margin: 0 0 0.5rem 0;
-  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
   font-family: 'Audiowide', sans-serif;
 }
 
 /* ---------- Subtext ---------- */
 p {
-  color: #666;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  font-size: 0.95rem;
+  color: white;
+  margin-bottom: 1.8rem;
+  line-height: 1.5;
 }
 
 /* ---------- Form Fields ---------- */
 .form-fields {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 
 .form-fields input {
   width: 100%;
-  padding: 0.7rem 1rem;
+  padding: 0.8rem 1rem;
   border: 2px solid #005eff;
   border-radius: 8px;
-  font-size: 0.95rem;
-  font-family: 'Segoe UI', sans-serif;
+  font-size: 1rem;
   box-sizing: border-box;
 }
 
@@ -119,7 +139,7 @@ p {
 }
 
 .location-input-wrapper input {
-  padding-right: 3rem;
+  padding-right: 2.8rem;
 }
 
 .location-icon {
@@ -127,23 +147,23 @@ p {
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #999;
   font-size: 1.2rem;
+  color: #999;
 }
 
 /* ---------- Submit Button ---------- */
 .submit-button {
+
   width: 100%;
+  margin-top: 1.8rem;
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
   background-color: #005eff;
   color: #fff;
-  padding: 0.8rem 1rem;
-  font-size: 1rem;
   border: none;
   border-radius: 25px;
   cursor: pointer;
-  margin-top: 1.2rem;
   transition: background 0.3s ease;
-  font-family: 'Segoe UI', sans-serif;
 }
 
 .submit-button:hover {
@@ -154,82 +174,5 @@ p {
   transform: translateY(1px);
 }
 
-/* ---------- Desktop Layout ---------- */
-@media (min-width: 768px) {
-  .signup-container {
-    flex-direction: row;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .left-image-section {
-    display: block;
-    height: 100vh;
-  }
-  
-  .form-section {
-    flex: 1;
-    padding: 2rem 3rem;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .form-wrapper {
-    max-width: 450px;
-    padding-top: 0;
-  }
-  
-  .background-logo {
-    width: 350px;
-    height: 350px;
-    top: 50%;
-    opacity: 0.12;
-  }
-  
-  h2 {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    font-size: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  .form-fields {
-    gap: 1rem;
-  }
-  
-  .form-fields input {
-    padding: 0.8rem 1.2rem;
-    font-size: 1rem;
-  }
-  
-  .submit-button {
-    padding: 1rem;
-    font-size: 1.1rem;
-    margin-top: 1.5rem;
-  }
-}
 
-/* ---------- Tablet Layout ---------- */
-@media (min-width: 480px) and (max-width: 767px) {
-  .form-section {
-    padding: 1.5rem 2rem;
-  }
-  
-  .background-logo {
-    width: 250px;
-    height: 250px;
-    opacity: 0.12;
-  }
-  
-  h2 {
-    font-size: 1.8rem;
-  }
-  
-  .form-wrapper {
-    padding-top: 0.5rem;
-  }
-}
+

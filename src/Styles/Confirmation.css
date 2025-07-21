@@ -2,7 +2,11 @@
 
 .confirmation-container {
   display: flex;
-  height: 100dvh;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: 100vh;
+  background: #f7faff;
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -11,8 +15,10 @@
 }
 
 .confirmation-right {
-  flex: 1;
-  padding: 30px 20px;
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  padding: 2.5rem 2rem 2.5rem 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,13 +28,14 @@
 }
 
 .confirmation-back {
-  margin-top: 20px;
   position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 24px;
+  top: 24px;
+  left: 24px;
+ font-size: 1.5rem;
   cursor: pointer;
-  color: #0047ab;
+  color: #005eff;
+  margin-bottom: 0.5rem;
+  margin-left: 0;
 }
 
 .confirmation-icon {
@@ -50,52 +57,59 @@
 }
 
 .confirmation-title {
-  margin-top: 30px;
-  font-size: 20px;
-  color: #0047ab;
+  margin-top: 2.5rem;
+  font-size: 1.6rem;
+  color: #005eff;
+  font-family: 'Audiowide', sans-serif;
   font-weight: 600;
   margin-bottom: 10px;
   padding: 0 10px;
 }
 
 .confirmation-subtitle {
-  margin-top: 30px;
-  font-size: 14px;
-  color: #666;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #555;
   padding: 0 20px;
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
 }
 
 .confirmation-button {
-  margin-top: 30px;
-  background-color: #0047ab;
+  margin-top: 2rem;
+  background-color: #005eff;
   color: white;
   border: none;
-  padding: 14px 32px;
-  font-size: 14px;
-  border-radius: 30px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0, 94, 255, 0.3);
   cursor: pointer;
-  transition: background 0.3s ease;
+  width: 100%;
+  max-width: 320px;
+  transition: all 0.3s ease;
 }
 
 .confirmation-button:hover {
   background-color: #003a90;
 }
 
-@media (min-width: 768px) {
-  .confirmation-left {
-    display: block;
-    flex: 0.4;
-  }
-
-  .side-image {
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-  }
-
+@media (max-width: 600px) {
   .confirmation-right {
-    flex: 0.6;
+    box-shadow: none;
+    border-radius: 0;
+    max-width: 100vw;
+    min-height: 100vh;
+    padding: 1.2rem 0.8rem 1.2rem 1.2rem;
+  }
+  .confirmation-back {
+    position: static;
+    align-self: flex-start;
+    font-size: 1.7rem;
+    margin-bottom: 0.2rem;
+    margin-left: 0.2rem;
+    top: auto;
+    left: auto;
   }
 }
+
+
